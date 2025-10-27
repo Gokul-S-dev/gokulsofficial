@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Personal Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </head>
 <body>
       <!--Nav bar-->
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
   <div class="container-fluid">
     <a class="navbar-brand" href="https://github.com/Gokul-S-dev">GOKUL.S</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav align-items-lg-center">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
@@ -41,7 +42,28 @@
   </div>
 </nav>
 
+<!-- Hero / Home -->
+<section class="hero d-flex align-items-center">
+  <div class="container text-center hero-content">
+    <p class="intro">HELLO I AM <span>GOKUL.S</span></p>
+    <!-- replaced static title with typing title -->
+    <h1 class="hero-title"><span id="text"></span><span class="cursor">|</span></h1>
 
-    
+    <a class="btn btn-resume mt-4" href="https://github.com/Gokul-S-dev/Certificate/blob/main/Resume/Gokul_Resume.pdf" role="button" aria-label="View resume">
+      Resume
+      <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+    </a>
+
+    <div class="mouse-scroll" aria-hidden="true">
+      <span class="mouse"></span>
+    </div>
+  </div>
+
+  <!-- decorative dots -->
+  <div class="decor decor-left"></div>
+  <div class="decor decor-right"></div>
+</section>
+
+<script src="index.js"></script>
 </body>
 </html>
