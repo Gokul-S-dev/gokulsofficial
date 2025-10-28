@@ -11,39 +11,26 @@
 </head>
 <body>
       <!--Nav bar-->
-      <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+      <nav id="mainNav" class="navbar navbar-expand-lg navbar-dark custom-navbar">
   <div class="container-fluid">
-    <a class="navbar-brand" href="https://github.com/Gokul-S-dev">GOKUL.S</a>
+    <a class="navbar-brand" href="#home">GOKUL.S</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav align-items-lg-center">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Education</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Skills</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Certificates</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">My Projects</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
+        <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
 <!-- Hero / Home -->
-<section class="hero d-flex align-items-center">
+<section id="home" class="hero d-flex align-items-center">
   <div class="container hero-content">
     <div class="row align-items-center">
       <div class="col-12 col-lg-8 hero-copy">
@@ -68,6 +55,53 @@
   <!-- decorative dots -->
   <div class="decor decor-left"></div>
   <div class="decor decor-right"></div>
+</section>
+
+<!-- Education / Road timeline -->
+<section id="education" class="education-section">
+  <div class="container">
+    <h2 class="section-title">Education</h2>
+
+    <div class="education-road">
+      <div class="edu-item fade-in-up">
+        <div class="edu-card">
+          <h3>Bachelor of Engineering</h3>
+          <span class="edu-meta">Computer Science — Karpagam Institute of Technology</span>
+          <div class="edu-actions">
+            <button class="edu-year" aria-label="Year 2024 to Present">2024 – Present</button>
+          </div>
+           <p class="edu-detail">Percentage: <strong>--%</strong></p>
+        </div>
+        <div class="edu-dot" aria-hidden="true"></div>
+      </div>
+
+      <div class="edu-item fade-in-up">
+        <div class="edu-card">
+          <h3>Higher Secondary Certificate</h3>
+          <span class="edu-meta">Tagore Matric Higher Secondary School</span>
+
+          <!-- year button that matches site accent -->
+          <div class="edu-actions">
+            <button class="edu-year" aria-label="Year 2023 to 2024">2023 – 2024</button>
+          </div>
+          <p class="edu-detail">Percentage: <strong>--%</strong></p>
+        </div>
+        <div class="edu-dot" aria-hidden="true"></div>
+      </div>
+
+      <div class="edu-item fade-in-up">
+        <div class="edu-card">
+          <h3>Secondary School Leaving Certificate</h3>
+          <span class="edu-meta">Tagore Matric Higher Secondary School</span>
+          <div class="edu-actions">
+            <button class="edu-year" aria-label="Year 2015 to 2017">2021 – 2022</button>
+          </div>
+          <p class="edu-detail">Percentage: <strong>--%</strong></p>
+        </div>
+        <div class="edu-dot" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script src="index.js"></script>
