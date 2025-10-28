@@ -1,20 +1,28 @@
 /* Base */
 :root{
-  --bg:#0c0d0e;
-  --muted:#bfc1c3;
-  --accent:#19a64a;
+  /* new purple gradient background tokens + accents */
+  --bg-start: #07040a;
+  --bg-mid:  #20062a;
+  --bg-end:  #2b003f;
+  --muted:#cfc7d6;
+  --accent:#9b4dff;
+  --accent-2:#ff5ca8;
   --glass: rgba(255,255,255,0.04);
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
+/* body background -> smooth purple gradient with soft radial glows */
 body{
   margin:0;
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: var(--bg);
   color:#fff;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+
+  background:
+    radial-gradient(600px 320px at 10% 12%, rgba(155,77,255,0.10), transparent 12%),
+    radial-gradient(500px 260px at 92% 78%, rgba(255,92,168,0.06), transparent 12%),
+    linear-gradient(180deg, var(--bg-start) 0%, var(--bg-mid) 45%, var(--bg-end) 100%);
+  min-height:100vh;
 }
 
 /* Navbar */
@@ -24,27 +32,55 @@ body{
   left:0;
   right:0;
   z-index:1030;
-  background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.25));
-  backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+  backdrop-filter: blur(8px);
   padding:0.6rem 1rem;
   transition: all .25s ease;
   border-bottom: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 8px 30px rgba(155,77,255,0.05);
 }
+
+/* brand with subtle gradient text */
 .custom-navbar .navbar-brand{
   font-weight:700;
   letter-spacing:1px;
-  color:#fff;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-decoration:none;
+  transition: transform .18s ease;
 }
+.custom-navbar .navbar-brand:hover{
+  transform: translateY(-3px) scale(1.02);
+  text-shadow: 0 6px 20px rgba(155,77,255,0.10);
+}
+
+/* nav links */
 .custom-navbar .nav-link{
   color: rgba(255,255,255,0.85);
   margin-left:0.25rem;
   margin-right:0.25rem;
   transition: color .15s ease, transform .15s ease;
+  position:relative;
 }
 .custom-navbar .nav-link:hover{
   color: var(--accent);
   transform: translateY(-2px);
 }
+
+/* active indicator underline */
+.custom-navbar .nav-link.active::after{
+  content: "";
+  display:block;
+  width:30px;
+  height:3px;
+  margin:6px auto 0;
+  border-radius:2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 6px 18px rgba(155,77,255,0.10);
+}
+/* mobile toggler color */
 .navbar-toggler{
   border-color: rgba(255,255,255,0.12);
 }
@@ -54,6 +90,7 @@ body{
 
 /* Hero */
 .hero{
+  background: linear-gradient(180deg, rgba(0,0,0,0.30), rgba(0,0,0,0.45));
   min-height:100vh;
   height:100vh;
   display:flex;
@@ -62,7 +99,6 @@ body{
   padding-top:72px; /* allow for fixed navbar */
   position:relative;
   overflow:hidden;
-  background: linear-gradient(180deg, rgba(8,9,10,0.98) 0%, rgba(12,13,14,1) 100%);
 }
 
 /* Decorative dotted backgrounds using radial gradients */
@@ -181,6 +217,45 @@ body{
 .decor-left{ left:6%; top:18%; transform:scale(1.2);}
 .decor-right{ right:6%; top:42%; transform:scale(1.4); opacity:0.9 }
 
+/* remove avatar rules and add a decorative visual block */
+.hero-visual{
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(155,77,255,0.16), transparent 30%),
+    radial-gradient(circle at 70% 70%, rgba(255,92,168,0.10), transparent 30%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: 0 40px 80px rgba(43,0,63,0.45);
+  border:6px solid rgba(255,255,255,0.03);
+  transition: transform .35s ease, box-shadow .35s ease, opacity .25s ease;
+  opacity:0.95;
+}
+.hero-visual:hover{ transform: translateY(-8px) scale(1.02); box-shadow: 0 48px 96px rgba(43,0,63,0.55); }
+
+/* ensure hero content is responsive and readable on small screens */
+.hero-content{ max-width:1100px; padding: 48px 18px; }
+.hero-copy{ padding-right:1.25rem; }
+.hero-title{ text-align:left; }
+.intro{ font-size:0.95rem; letter-spacing:6px; margin-bottom:0.8rem; }
+.hero-sub{ color: rgba(255,255,255,0.78); max-width:560px; }
+
+/* Responsiveness: stack and center on smaller screens */
+@media (max-width: 991.98px) {
+  .hero-copy, .hero-title, .intro { text-align: center; padding-right:0; }
+  .hero-visual { margin: 0 auto; }
+  .hero-title { font-size: clamp(1.8rem, 6vw, 3.4rem); }
+  .intro{ letter-spacing:4px; }
+  .hero{ padding-top:72px; }
+}
+
+/* Small devices: tighten spacing */
+@media (max-width: 575.98px) {
+  .hero-content{ padding: 32px 14px; }
+  .hero-visual{ width:180px; height:180px; border-width:4px; box-shadow: 0 20px 40px rgba(43,0,63,0.35); }
+  .btn-resume{ padding:0.55rem 1rem; font-size:0.95rem; }
+}
+
 /* Responsive tweaks */
 @media (max-width:768px){
   .intro{ letter-spacing:5px; font-size:1rem}
@@ -191,9 +266,4 @@ body{
 /* small responsive tweak so typing text stays centered on small screens */
 @media (max-width:420px){
   .hero-title{ font-size:2rem }
-}
-.navbar-brand:hover{
-    color: var(--accent);
-    transform: translateY(-2px);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
