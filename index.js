@@ -105,15 +105,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contactForm');
 
   if (copyBtn && mailtoLink) {
-    copyBtn.addEventListener('click', async () => {
-      const email = mailtoLink.getAttribute('href').replace('mailto:', '');
-      try {
-        await navigator.clipboard.writeText(email);
-        copyBtn.textContent = 'Copied!';
-        setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1400);
-      } catch (err) {
-        // fallback: select mailto link
-        alert('Copy this email: ' + email);
+    // if the element is an anchor with a mailto href, let the browser handle it.
+    // otherwise, navigate explicitly to the mailto link as a fallback.
+    copyBtn.addEventListener('click', (e) => {
+      const href = copyBtn.getAttribute('href') || mailtoLink.getAttribute('href');
+      if (!href) return;
+      // if it's an anchor with href, allow default navigation (no preventDefault)
+      // but ensure fallback for any JS-only elements:
+      if (copyBtn.tagName.toLowerCase() !== 'a') {
+        e.preventDefault();
+        window.location.href = href;
       }
     });
   }
