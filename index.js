@@ -1,5 +1,5 @@
 // simple typewriter for hero title
-const words = ['Web Developer', 'Full Stack Developer','AWS Cloud Engineer','DevOps Engineer'];
+const words = ['Web Developer', 'Full Stack Developer'];
 let wordIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
@@ -95,5 +95,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // (works for direct deep-links)
     const rect = hero.getBoundingClientRect();
     if (rect.bottom <= 0 || rect.top > window.innerHeight) nav.classList.add('hidden');
+  }
+});
+
+// copy email to clipboard and simple form -> mailto handler
+document.addEventListener('DOMContentLoaded', () => {
+  const copyBtn = document.getElementById('copyEmail');
+  const mailtoLink = document.getElementById('mailtoLink');
+  const contactForm = document.getElementById('contactForm');
+
+  if (copyBtn && mailtoLink) {
+    // if the element is an anchor with a mailto href, let the browser handle it.
+    // otherwise, navigate explicitly to the mailto link as a fallback.
+    copyBtn.addEventListener('click', (e) => {
+      const href = copyBtn.getAttribute('href') || mailtoLink.getAttribute('href');
+      if (!href) return;
+      // if it's an anchor with href, allow default navigation (no preventDefault)
+      // but ensure fallback for any JS-only elements:
+      if (copyBtn.tagName.toLowerCase() !== 'a') {
+        e.preventDefault();
+        window.location.href = href;
+      }
+    });
+  }
+
+  if (contactForm && mailtoLink) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(contactForm);
+      const name = formData.get('name') || '';
+      const email = formData.get('email') || '';
+      const message = formData.get('message') || '';
+      const to = mailtoLink.getAttribute('href').replace('mailto:', '');
+      // open user's mail client with prefilled subject/body
+      const subject = encodeURIComponent(`Portfolio message from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    });
   }
 });
