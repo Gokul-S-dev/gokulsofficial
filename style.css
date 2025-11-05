@@ -196,6 +196,26 @@ body{
   font-size: clamp(1.2rem, 2.6vw, 1.8rem);
 }
 
+/* Automatically add a centered dotted underline below each section title.
+   This avoids requiring a separate <div class="underline"></div> in markup.
+   Existing .underline elements remain supported for backwards compatibility. */
+.section-title{
+  position: relative;
+  padding-bottom: 12px; /* space for underline */
+}
+.section-title::after{
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 84px;
+  height: 0;
+  border-bottom: 3px dotted rgba(255,255,255,0.14);
+  display: block;
+  pointer-events: none;
+}
+
 /* vertical road */
 .skill-card:hover .skill-circle {
   transform: scale(1.06);
@@ -448,7 +468,15 @@ body{
 .certifications-section h2{
   text-align:center; font-size:clamp(1.2rem,2.8vw,1.6rem); margin:0 auto 10px; font-weight:800; letter-spacing:0.4px;
 }
+.underline{
+  width:84px;
+  height:0;
+  margin:8px auto 22px;
+  border-bottom:3px dotted rgba(255,255,255,0.14);
+}
+
 .certifications-section .underline{
+  /* legacy/specific rule kept for clarity — inherits same appearance */
   width:84px; height:0; margin:8px auto 22px; border-bottom:3px dotted rgba(255,255,255,0.14);
 }
 .filter-buttons{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:18px; }
