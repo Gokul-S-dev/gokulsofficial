@@ -180,7 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const filterBar = document.querySelector('.filter-buttons');
   const buttons = Array.from(document.querySelectorAll('.filter-btn'));
-  const items = Array.from(document.querySelectorAll('.certificate-item'));
+  // Only target certificate items inside the Certifications section so Achievements (which reuse the same tile class)
+  // are not affected by the certificate filters.
+  const certRoot = document.querySelector('#certifications') || document.querySelector('.certifications-section');
+  const items = certRoot ? Array.from(certRoot.querySelectorAll('.certificate-item')) : Array.from(document.querySelectorAll('.certificate-item'));
   if (!filterBar || !buttons.length || !items.length) return;
 
   const setActiveButton = (btn) => {
@@ -233,11 +236,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const lbImg = lightbox.querySelector('img');
   const lbCaption = lightbox.querySelector('.lightbox-caption');
   const lbClose = lightbox.querySelector('.lightbox-close');
-
-  const openLightbox = (src, caption) => {
+  const openLightbox = (src, caption, sourceTile) => {
     lbImg.src = src;
     lbImg.alt = caption || 'Certificate preview';
-    lbCaption.textContent = caption || '';
+    // caption may contain title and description separated by a delimiter or provided separately
+    // we'll set the caption area to allow rich content (title + description)
+    if (caption && caption.indexOf('|') !== -1) {
+      const parts = caption.split('|');
+      lbCaption.innerHTML = `<div class="lb-title">${parts[0] || ''}</div><div class="lb-desc">${parts.slice(1).join(' ')}</div>`;
+    } else {
+      lbCaption.innerHTML = `<div class="lb-title">${caption || ''}</div>`;
+    }
+
+    // set lightbox background variant based on the source tile or its data-bg attribute
+    const lbContent = lightbox.querySelector('.lightbox-content');
+    lbContent.classList.remove('variant-learned','variant-aws','variant-default');
+    if (sourceTile) {
+      const preferred = (sourceTile.dataset.bg || '').trim();
+      if (preferred) {
+        const cls = preferred.startsWith('variant-') ? preferred : `variant-${preferred}`;
+        lbContent.classList.add(cls);
+      } else if (sourceTile.classList.contains('learned')) lbContent.classList.add('variant-learned');
+      else if (sourceTile.classList.contains('aws')) lbContent.classList.add('variant-aws');
+      else lbContent.classList.add('variant-default');
+    } else {
+      lbContent.classList.add('variant-default');
+    }
+
     lightbox.classList.add('open');
     lightbox.setAttribute('aria-hidden', 'false');
     lbClose.focus();
@@ -251,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   };
 
-  // create overlay for each item
+  // create overlay for each item and wire interactions (click + keyboard + tile click)
   items.forEach(it => {
     const img = it.querySelector('img');
     const caption = it.getAttribute('data-caption') || (it.querySelector('.caption') ? it.querySelector('.caption').textContent : '');
@@ -262,12 +287,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     it.appendChild(overlay);
     const btn = overlay.querySelector('.eye-btn');
+    // open lightbox from overlay button; pass the source tile so the lightbox can adopt a variant
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (img && img.src) openLightbox(img.src, caption);
+      if (img && img.src) openLightbox(img.src, caption, it);
     });
-    // keyboard support
+    // keyboard support on the overlay button
     btn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } });
+
+    // allow clicking the entire tile to open the lightbox (makes achievements behave like certificates)
+    it.addEventListener('click', (e) => {
+      // ignore clicks that originated from interactive controls (they already handle it)
+      if (e.target.closest('button') || e.target.closest('a')) return;
+      if (img && img.src) openLightbox(img.src, caption, it);
+    });
+    // keyboard support on the tile itself
+    it.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (img && img.src) openLightbox(img.src, caption, it);
+      }
+    });
   });
 
   // close handlers
