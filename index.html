@@ -23,6 +23,7 @@
           <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
           <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#certifications">Certifications</a></li>
           <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
@@ -113,7 +114,7 @@
   <div class="container">
     <h2 class="section-title">Skills</h2>
 
-    <div class="skills-grid">
+  <div class="skills-grid">
       <div class="skill-card" data-percent="90" data-accent="#06b33b">
         <div class="skill-panel">
           <div class="skill-circle">
@@ -189,6 +190,94 @@
   </div>
 </section>
 
+<!-- Certifications Section -->
+<section id="certifications" class="certifications-section">
+  <h2>MY CERTIFICATES</h2>
+  <div class="underline"></div>
+
+  <!-- Filter Buttons -->
+  <div class="filter-buttons">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="aws">AWS</button>
+    <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+    <button class="filter-btn" data-filter="programming">Programming</button>
+    <button class="filter-btn" data-filter="github">GitHub</button>
+    <button class="filter-btn" data-filter="devops">DevOps</button>
+    <button class="filter-btn" data-filter="azure">Microsoft Azure</button>
+    <button class="filter-btn" data-filter="learned">Learned</button>
+  </div>
+
+  <!-- Certificate Gallery -->
+  <div class="certificates-gallery">
+    <!--Cloud Certifications-->
+    <div class="certificate-item aws">
+      <img src="Certificate\Cloud Certifications\aws-academy-graduate-cloud-foundations-training-bad.png" alt="AWS Certificate 1">
+    </div>
+
+    <div class="certificate-item aws">
+      <img src="Certificate\Cloud Certifications\Severless lamda.png" alt="AWS Certificate 2">
+    </div>
+
+    <!--Full Stack Certifications-->
+
+    <div class="certificate-item fullstack">
+      <img src="./Certificate/MERN Certifications/FullStack Internship.jpg" alt="Full Stack Certificate">
+    </div>
+
+    <div class="certificate-item fullstack">
+      <img src="./Certificate/MERN Certifications/Node js.jpg" alt="Full Stack Certificate">
+    </div>
+
+    <!-- Programming Certifications-->
+    <div class="certificate-item programming">
+      <img src="images/programming1.jpg" alt="Programming Certificate">
+    </div>
+    
+    <!-- GitHub, DevOps, Azure Certifications-->
+    <div class="certificate-item github">
+      <img src="images/github1.jpg" alt="GitHub Certificate">
+    </div>
+
+    <div class="certificate-item devops">
+      <img src="images/devops1.jpg" alt="DevOps Certificate">
+    </div>
+
+    <div class="certificate-item azure">
+      <img src="images/azure1.jpg" alt="Azure Certificate">
+    </div>
+
+    <!-- Department Certifications-->
+
+    <div class="certificate-item learned">
+      <img src="./Certificate/Department/AZ Master.png" alt="Azure Certificate">
+    </div>
+
+     <div class="certificate-item learned">
+      <img src="./Certificate/Department/Delnet.png" alt="Azure Certificate">
+    </div>
+
+     <div class="certificate-item learned">
+      <img src="./Certificate/Department/Screenshot 2025-08-22 200831.png" alt="Azure Certificate">
+    </div>
+
+  </div>
+</section>
+
+
 <script src="index.js"></script>
+  
+  <!-- Scroll-to-top button -->
+  <button id="scrollTop" class="scroll-top" aria-label="Back to top" title="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 5l-7 7h4v7h6v-7h4z" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <!-- Lightbox for certificates -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-content" role="dialog" aria-modal="true" aria-labelledby="lb-caption">
+      <button class="lightbox-close" aria-label="Close">×</button>
+      <img src="" alt="Certificate preview" />
+      <div id="lb-caption" class="lightbox-caption"></div>
+    </div>
+  </div>
 </body>
 </html>

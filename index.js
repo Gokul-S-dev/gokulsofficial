@@ -176,6 +176,106 @@ document.addEventListener('DOMContentLoaded', () => {
   if (initActive) moveIndicator(initActive);
 });
 
+// Certificates filter (simple, framework-free)
+document.addEventListener('DOMContentLoaded', () => {
+  const filterBar = document.querySelector('.filter-buttons');
+  const buttons = Array.from(document.querySelectorAll('.filter-btn'));
+  const items = Array.from(document.querySelectorAll('.certificate-item'));
+  if (!filterBar || !buttons.length || !items.length) return;
+
+  const setActiveButton = (btn) => {
+    buttons.forEach(b => {
+      const is = b === btn;
+      b.classList.toggle('active', is);
+      b.setAttribute('aria-pressed', is ? 'true' : 'false');
+    });
+  };
+
+  const filterItems = (filter) => {
+    const key = String(filter).toLowerCase();
+    items.forEach(it => {
+      // each item has classes like 'certificate-item aws' etc.
+      if (key === 'all') {
+        it.classList.remove('hidden');
+      } else {
+        const matches = it.classList.contains(key);
+        it.classList.toggle('hidden', !matches);
+      }
+    });
+  };
+
+  // wire up buttons
+  buttons.forEach(btn => {
+    // set ARIA
+    if (!btn.hasAttribute('role')) btn.setAttribute('role','button');
+    btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
+    btn.addEventListener('click', (e) => {
+      const filter = btn.dataset.filter || btn.getAttribute('data-filter') || btn.textContent.trim().toLowerCase();
+      setActiveButton(btn);
+      filterItems(filter);
+    });
+  });
+
+  // initial state: if there's an active button, apply it; otherwise 'all'
+  const initial = buttons.find(b => b.classList.contains('active')) || buttons.find(b => (b.dataset.filter||b.getAttribute('data-filter')) === 'all') || buttons[0];
+  if (initial) {
+    setActiveButton(initial);
+    filterItems(initial.dataset.filter || initial.getAttribute('data-filter') || 'all');
+  }
+});
+
+// Add hover overlay eye and lightbox interactions for each certificate
+document.addEventListener('DOMContentLoaded', () => {
+  const items = Array.from(document.querySelectorAll('.certificate-item'));
+  const lightbox = document.getElementById('lightbox');
+  if (!items.length || !lightbox) return;
+
+  const lbImg = lightbox.querySelector('img');
+  const lbCaption = lightbox.querySelector('.lightbox-caption');
+  const lbClose = lightbox.querySelector('.lightbox-close');
+
+  const openLightbox = (src, caption) => {
+    lbImg.src = src;
+    lbImg.alt = caption || 'Certificate preview';
+    lbCaption.textContent = caption || '';
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    lbClose.focus();
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lbImg.src = '';
+    document.body.style.overflow = '';
+  };
+
+  // create overlay for each item
+  items.forEach(it => {
+    const img = it.querySelector('img');
+    const caption = it.getAttribute('data-caption') || (it.querySelector('.caption') ? it.querySelector('.caption').textContent : '');
+    const overlay = document.createElement('div');
+    overlay.className = 'certificate-overlay';
+    overlay.innerHTML = `<button class="eye-btn" aria-label="View certificate">` +
+      `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="12" cy="12" r="3" stroke="#fff" stroke-width="1.4" fill="none"></circle></svg>` + `</button>`;
+
+    it.appendChild(overlay);
+    const btn = overlay.querySelector('.eye-btn');
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (img && img.src) openLightbox(img.src, caption);
+    });
+    // keyboard support
+    btn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } });
+  });
+
+  // close handlers
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox(); });
+});
+
 // animate skill rings (writes --p on each .skill-circle and updates the displayed percent)
 (function(){
   const cards = document.querySelectorAll('.skill-card');
@@ -247,3 +347,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 })();
+
+// Scroll-to-top button behavior: show/hide on scroll and smooth-scroll to top/home
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollBtn = document.getElementById('scrollTop');
+  if (!scrollBtn) return;
+  const home = document.querySelector('#home');
+  const threshold = 320;
+
+  const handleScroll = () => {
+    if (window.scrollY > threshold) scrollBtn.classList.add('show');
+    else scrollBtn.classList.remove('show');
+  };
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  // initial state
+  handleScroll();
+
+  scrollBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (home) home.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
