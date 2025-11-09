@@ -29,32 +29,62 @@ function typeEffect() {
   setTimeout(typeEffect, speed);
 }
 
-// start after DOM ready
+// Throttle utility function for performance optimization
+function throttle(func, limit) {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
+
+// Consolidated DOMContentLoaded handler for better performance
 document.addEventListener('DOMContentLoaded', () => {
-  // ensure element exists before starting
+  // Start typewriter effect
   if (textElement) typeEffect();
+
+  // Initialize IntersectionObserver for fade-in animations
+  initializeFadeInObserver();
+
+  // Initialize smooth scrolling and navbar behavior
+  initializeNavigation();
+
+  // Initialize animated nav indicator and scrollspy
+  initializeNavIndicator();
+
+  // Initialize certificate filters
+  initializeCertificateFilters();
+
+  // Initialize certificate lightbox
+  initializeLightbox();
+
+  // Initialize skill animations
+  initializeSkillAnimations();
+
+  // Initialize scroll-to-top button
+  initializeScrollToTop();
 });
 
-// reveal education items with IntersectionObserver
-(function(){
+// Reveal education items with IntersectionObserver
+function initializeFadeInObserver() {
   const observerOpts = { root: null, rootMargin: '0px 0px -8% 0px', threshold: 0.08 };
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         e.target.classList.add('in-view');
-        // optional: unobserve once visible
         io.unobserve(e.target);
       }
     });
   }, observerOpts);
 
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.fade-in-up').forEach(el => io.observe(el));
-  });
-})();
+  document.querySelectorAll('.fade-in-up').forEach(el => io.observe(el));
+}
 
 // Smooth scroll for page anchors and auto-hide navbar when leaving Home
-document.addEventListener('DOMContentLoaded', () => {
+function initializeNavigation() {
   const nav = document.getElementById('mainNav');
   const hero = document.querySelector('#home') || document.querySelector('.hero');
 
@@ -96,10 +126,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const rect = hero.getBoundingClientRect();
     if (rect.bottom <= 0 || rect.top > window.innerHeight) nav.classList.add('hidden');
   }
-});
+}
 
 // Animated nav indicator + scrollspy (updates .active and animates the indicator)
-document.addEventListener('DOMContentLoaded', () => {
+function initializeNavIndicator() {
   const navInner = document.querySelector('.nav-inner');
   if (!navInner) return;
 
@@ -165,19 +195,19 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(s => { if (s.section) io.observe(s.section); });
   }
 
-  // position indicator on load & when resizing
-  window.addEventListener('resize', () => {
+  // position indicator on load & when resizing (throttled for performance)
+  window.addEventListener('resize', throttle(() => {
     const active = navInner.querySelector('.nav-link.active');
     if (active) moveIndicator(active);
-  });
+  }, 100));
 
   // initial placement: use active link if present
   const initActive = navInner.querySelector('.nav-link.active') || links[0];
   if (initActive) moveIndicator(initActive);
-});
+}
 
 // Certificates filter (simple, framework-free)
-document.addEventListener('DOMContentLoaded', () => {
+function initializeCertificateFilters() {
   const filterBar = document.querySelector('.filter-buttons');
   const buttons = Array.from(document.querySelectorAll('.filter-btn'));
   // Only target certificate items inside the Certifications section so Achievements (which reuse the same tile class)
@@ -225,10 +255,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setActiveButton(initial);
     filterItems(initial.dataset.filter || initial.getAttribute('data-filter') || 'all');
   }
-});
+}
 
 // Add hover overlay eye and lightbox interactions for each certificate
-document.addEventListener('DOMContentLoaded', () => {
+function initializeLightbox() {
   const items = Array.from(document.querySelectorAll('.certificate-item'));
   const lightbox = document.getElementById('lightbox');
   if (!items.length || !lightbox) return;
@@ -236,6 +266,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const lbImg = lightbox.querySelector('img');
   const lbCaption = lightbox.querySelector('.lightbox-caption');
   const lbClose = lightbox.querySelector('.lightbox-close');
+  const lbContent = lightbox.querySelector('.lightbox-content');
+  
   const openLightbox = (src, caption, sourceTile) => {
     lbImg.src = src;
     lbImg.alt = caption || 'Certificate preview';
@@ -249,7 +281,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // set lightbox background variant based on the source tile or its data-bg attribute
-    const lbContent = lightbox.querySelector('.lightbox-content');
     lbContent.classList.remove('variant-learned','variant-aws','variant-default');
     if (sourceTile) {
       const preferred = (sourceTile.dataset.bg || '').trim();
@@ -314,10 +345,10 @@ document.addEventListener('DOMContentLoaded', () => {
   lbClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox(); });
-});
+}
 
 // animate skill rings (writes --p on each .skill-circle and updates the displayed percent)
-(function(){
+function initializeSkillAnimations() {
   const cards = document.querySelectorAll('.skill-card');
   if (!cards.length) return;
 
@@ -369,36 +400,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { threshold: 0.2 });
 
-  // On DOM ready: set per-card CSS variables (from data-accent) and start observing
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.skill-card').forEach(card => {
-      // set --skill-accent from data-accent if provided (avoids inline styles in HTML)
-      const accent = card.dataset.accent;
-      if (accent) {
-        card.style.setProperty('--skill-accent', accent);
-        // also set a computed rgba variant used for glows/text-shadow
-        const rgba = hexToRgba(accent, 0.28);
-        if (rgba) card.style.setProperty('--skill-accent-rgba', rgba);
-      }
-      // Ensure each circle starts at 0 (so CSS doesn't rely on inline style)
-      const circle = card.querySelector('.skill-circle');
-      if (circle) circle.style.setProperty('--p', 0);
-      io.observe(card);
-    });
+  // Set per-card CSS variables (from data-accent) and start observing
+  cards.forEach(card => {
+    // set --skill-accent from data-accent if provided (avoids inline styles in HTML)
+    const accent = card.dataset.accent;
+    if (accent) {
+      card.style.setProperty('--skill-accent', accent);
+      // also set a computed rgba variant used for glows/text-shadow
+      const rgba = hexToRgba(accent, 0.28);
+      if (rgba) card.style.setProperty('--skill-accent-rgba', rgba);
+    }
+    // Ensure each circle starts at 0 (so CSS doesn't rely on inline style)
+    const circle = card.querySelector('.skill-circle');
+    if (circle) circle.style.setProperty('--p', 0);
+    io.observe(card);
   });
-})();
+}
 
 // Scroll-to-top button behavior: show/hide on scroll and smooth-scroll to top/home
-document.addEventListener('DOMContentLoaded', () => {
+function initializeScrollToTop() {
   const scrollBtn = document.getElementById('scrollTop');
   if (!scrollBtn) return;
   const home = document.querySelector('#home');
   const threshold = 320;
 
-  const handleScroll = () => {
+  // Throttled scroll handler for better performance
+  const handleScroll = throttle(() => {
     if (window.scrollY > threshold) scrollBtn.classList.add('show');
     else scrollBtn.classList.remove('show');
-  };
+  }, 100);
 
   window.addEventListener('scroll', handleScroll, { passive: true });
   // initial state
@@ -409,4 +439,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (home) home.scrollIntoView({ behavior: 'smooth', block: 'start' });
     else window.scrollTo({ top: 0, behavior: 'smooth' });
   });
-});
+}
