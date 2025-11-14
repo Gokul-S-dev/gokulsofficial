@@ -410,3 +410,82 @@ document.addEventListener('DOMContentLoaded', () => {
     else window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 });
+
+// Contact form: build mailto and copy-email behavior
+document.addEventListener('DOMContentLoaded', () => {
+  const copyBtn = document.getElementById('copyEmail');
+  const emailEl = document.getElementById('contact-email');
+  const mailtoQuick = document.getElementById('mailtoQuick');
+  const form = document.getElementById('contactForm');
+  const feedback = document.getElementById('contactFeedback');
+  const clearBtn = document.getElementById('clearForm');
+
+  if (copyBtn && emailEl) {
+    copyBtn.addEventListener('click', async () => {
+      const txt = emailEl.textContent.trim();
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(txt);
+        } else {
+          // fallback
+          const ta = document.createElement('textarea');
+          ta.value = txt;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+        }
+        copyBtn.textContent = 'Copied';
+        setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1800);
+      } catch (err) {
+        copyBtn.textContent = 'Error';
+        setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1800);
+      }
+    });
+  }
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = (document.getElementById('cf-name') || {}).value || '';
+      const from = (document.getElementById('cf-email') || {}).value || '';
+      const subject = (document.getElementById('cf-subject') || {}).value || '';
+      const message = (document.getElementById('cf-message') || {}).value || '';
+
+      // simple validation
+      if (!from || !message) {
+        if (feedback) {
+          feedback.textContent = 'Please include your email and message.';
+          feedback.style.opacity = '1';
+          setTimeout(() => { feedback.style.opacity = ''; feedback.textContent = 'Sent'; }, 2200);
+        }
+        return;
+      }
+
+      const to = (emailEl && emailEl.textContent) ? emailEl.textContent.trim() : 'sggokul762@gmail.com';
+      // build body including sender name and email
+      let body = '';
+      if (name) body += `From: ${name} (${from})%0D%0A%0D%0A`;
+      body += encodeURIComponent(message);
+      // include original subject if provided
+      const mailto = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject || 'Contact from portfolio')}&body=${body}`;
+
+      // open mail client - use location.href so it works across browsers
+      window.location.href = mailto;
+
+      // show feedback briefly (actual send happens in mail client)
+      if (feedback) {
+        feedback.textContent = 'Opening mail client…';
+        feedback.style.opacity = '1';
+        setTimeout(() => { feedback.style.opacity = ''; feedback.textContent = 'Sent'; }, 2400);
+      }
+    });
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      const els = ['cf-name','cf-email','cf-subject','cf-message'];
+      els.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    });
+  }
+});

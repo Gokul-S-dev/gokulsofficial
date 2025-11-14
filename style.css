@@ -459,6 +459,52 @@ body{
 }
 .btn-copy{ padding:8px 12px; border-radius:8px; background: rgba(255,255,255,0.04); color:#fff; border:1px solid rgba(255,255,255,0.03); cursor:pointer; }
 
+/* Contact form specific styles */
+.contact-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:28px; max-width:1100px; margin: 0 auto; }
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form textarea{
+  outline: none;
+  box-shadow: none;
+  transition: box-shadow .12s ease, transform .12s ease;
+}
+.contact-form input::placeholder, .contact-form textarea::placeholder{ color: rgba(255,255,255,0.55); }
+.contact-form input:focus, .contact-form textarea:focus{
+  box-shadow: 0 8px 28px rgba(155,77,255,0.08);
+  border-color: rgba(155,77,255,0.28);
+  transform: translateY(-2px);
+}
+.contact-card h3{ margin-top:0; }
+.contact-feedback-show{ opacity:1 !important; }
+
+@media (max-width: 992px){
+  .contact-grid{ grid-template-columns: 1fr; }
+}
+
+/* semantic contact classes used in markup */
+.contact-title{ margin-top:0; }
+.contact-lead{ color: rgba(255,255,255,0.9); margin-bottom:6px; }
+.contact-block{ margin-top:12px; margin-bottom:8px; }
+.contact-info-row{ display:flex; gap:8px; align-items:center; margin-top:6px; }
+.contact-email-text{ font-weight:700; color:#fff; }
+.mailto-quick{ margin-left:auto; }
+.contact-meta{ margin-top:16px; }
+.contact-meta-row{ margin-top:8px; }
+.contact-note{ margin-top:18px; color: rgba(255,255,255,0.78); font-size:0.95rem; }
+.contact-phone{ margin:0 0 6px; }
+
+.contact-form-row{ display:flex; gap:8px; flex-wrap:wrap; }
+.contact-input{ flex:1 1 220px; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#fff; }
+.contact-subject{ width:100%; margin-top:12px; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#fff; }
+.contact-textarea{ width:100%; margin-top:12px; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#fff; resize:vertical; }
+.contact-actions{ display:flex; gap:10px; align-items:center; margin-top:12px; }
+.contact-feedback{ margin-left:auto; color:#fff; font-weight:600; opacity:0; transition:opacity .18s; }
+
+@media (max-width: 575.98px) {
+  .contact-input{ flex:1 1 100%; }
+}
+
 /* Certifications / My Certificates */
 .certifications-section{
   padding:60px 18px;
