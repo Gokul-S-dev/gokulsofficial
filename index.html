@@ -379,7 +379,63 @@ Deployed using Docker and Render, featuring seamless frontend–backend integrat
       </div>
     </div>
   </section>
-  
+
+  <!-- Contact -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact-grid">
+        <!-- Info card -->
+        <div class="contact-card">
+          <h3 class="contact-title">Get in touch</h3>
+          <p class="lead contact-lead">I'd love to hear from you — drop a message or use the links below.</p>
+          <div class="contact-block">
+            <strong>Email</strong>
+            <div class="contact-info-row">
+              <span id="contact-email" class="contact-email-text">sggokul762@gmail.com</span>
+              <button id="copyEmail" class="btn-copy" type="button" aria-label="Copy email">Copy</button>
+              <a id="mailtoQuick" class="btn-email mailto-quick" href="mailto:sggokul762@gmail.com">Send Mail</a>
+            </div>
+          </div>
+
+          <div class="contact-meta">
+            <strong>LinkedIn</strong>
+            <div class="contact-meta-row"><a class="btn-copy" href="https://www.linkedin.com/in/gokuls2512" target="_blank" rel="noopener noreferrer">View LinkedIn</a></div>
+          </div>
+
+          <div class="contact-meta">
+            <strong>GitHub</strong>
+            <div class="contact-meta-row"><a class="btn-copy" href="https://github.com/Gokul-S-dev" target="_blank" rel="noopener noreferrer">View GitHub</a></div>
+          </div>
+
+          <div class="contact-note">
+            <p class="contact-phone">Phone: +91 8667581651</p>
+            <small>Or use the contact form to send a pre-filled email to my inbox.</small>
+          </div>
+        </div>
+
+        <!-- Form card -->
+        <div class="contact-card">
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="contact-form-row">
+              <input id="cf-name" name="name" type="text" placeholder="Your name" required aria-label="Your name" class="contact-input">
+              <input id="cf-email" name="email" type="email" placeholder="Your email" required aria-label="Your email" class="contact-input">
+            </div>
+
+            <input id="cf-subject" name="subject" type="text" placeholder="Subject" class="contact-subject">
+
+            <textarea id="cf-message" name="message" rows="6" placeholder="Write your message here..." class="contact-textarea"></textarea>
+
+            <div class="contact-actions">
+              <button id="sendMailBtn" type="submit" class="btn-resume">Send Mail</button>
+              <button id="clearForm" type="button" class="btn-copy">Clear</button>
+              <div id="contactFeedback" class="contact-feedback">Sent</div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- Scroll-to-top button -->
   <button id="scrollTop" class="scroll-top" aria-label="Back to top" title="Back to top">
     <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 5l-7 7h4v7h6v-7h4z" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
