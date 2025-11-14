@@ -393,19 +393,35 @@ Deployed using Docker and Render, featuring seamless frontend–backend integrat
             <strong>Email</strong>
             <div class="contact-info-row">
               <span id="contact-email" class="contact-email-text">sggokul762@gmail.com</span>
-              <button id="copyEmail" class="btn-copy" type="button" aria-label="Copy email">Copy</button>
-              <a id="mailtoQuick" class="btn-email mailto-quick" href="mailto:sggokul762@gmail.com">Send Mail</a>
+              <button id="copyEmail" class="btn-copy" type="button" aria-label="Copy email">
+                <!-- Copy icon -->
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="10" height="10" rx="2" ry="2" stroke="#fff" fill="none" stroke-width="1.6"/><path d="M5 15V7a2 2 0 0 1 2-2h8" stroke="#fff" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Copy
+              </button>
+              <a id="mailtoQuick" class="btn-email mailto-quick" href="mailto:sggokul762@gmail.com">
+                <!-- Mail icon -->
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="#fff" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><polyline points="21,8.5 12,14 3,8.5" stroke="#fff" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Send Mail
+              </a>
             </div>
           </div>
 
           <div class="contact-meta">
             <strong>LinkedIn</strong>
-            <div class="contact-meta-row"><a class="btn-copy" href="https://www.linkedin.com/in/gokuls2512" target="_blank" rel="noopener noreferrer">View LinkedIn</a></div>
+            <div class="contact-meta-row"><a class="social-btn" href="https://www.linkedin.com/in/gokuls2512" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn">
+                <!-- LinkedIn icon -->
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.24 8.99h4.48V24H.24V8.99zM8.5 8.99h4.3v2.03h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.41 3 5.41 6.88V24h-4.5v-7.03c0-1.68-.03-3.85-2.34-3.85-2.34 0-2.7 1.83-2.7 3.72V24H8.5V8.99z" fill="#fff"/></svg>
+                LinkedIn
+              </a></div>
           </div>
 
           <div class="contact-meta">
             <strong>GitHub</strong>
-            <div class="contact-meta-row"><a class="btn-copy" href="https://github.com/Gokul-S-dev" target="_blank" rel="noopener noreferrer">View GitHub</a></div>
+            <div class="contact-meta-row"><a class="social-btn" href="https://github.com/Gokul-S-dev" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">
+                <!-- GitHub icon -->
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.38c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.09-.75.08-.74.08-.74 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.48.99.11-.78.42-1.3.76-1.6-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.47 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5z" fill="#fff"/></svg>
+                GitHub
+              </a></div>
           </div>
 
           <div class="contact-note">
@@ -427,7 +443,11 @@ Deployed using Docker and Render, featuring seamless frontend–backend integrat
             <textarea id="cf-message" name="message" rows="6" placeholder="Write your message here..." class="contact-textarea"></textarea>
 
             <div class="contact-actions">
-              <button id="sendMailBtn" type="submit" class="btn-resume">Send Mail</button>
+              <button id="sendMailBtn" type="submit" class="btn-resume">
+                <!-- paper-plane icon -->
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 2L11 13" stroke="#fff" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2l-7 20-4-9-9-4 20-7z" stroke="#fff" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Send Mail
+              </button>
               <button id="clearForm" type="button" class="btn-copy">Clear</button>
               <div id="contactFeedback" class="contact-feedback">Sent</div>
             </div>

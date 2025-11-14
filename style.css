@@ -482,6 +482,91 @@ body{
   .contact-grid{ grid-template-columns: 1fr; }
 }
 
+/* ========================
+   Contact - visual polish
+   Non-functional styles only. Enhances the look (glass, depth, gradients)
+   without changing structure or behavior.
+   ======================== */
+.contact-section{
+  position: relative;
+  overflow: hidden;
+}
+.contact-section::before{
+  content: '';
+  position: absolute;
+  inset: -12% -8%;
+  background: radial-gradient(600px 360px at 10% 10%, rgba(155,77,255,0.06), transparent 12%),
+              radial-gradient(420px 260px at 92% 82%, rgba(255,92,168,0.04), transparent 12%);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+}
+
+.contact-grid{ position: relative; z-index: 2; gap:32px; }
+
+.contact-card{
+  padding: 26px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 28px 60px rgba(6,6,12,0.55);
+  backdrop-filter: blur(8px) saturate(120%);
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease;
+}
+.contact-card .card-inner{ position: relative; z-index:1; }
+.contact-card:hover{ transform: translateY(-8px); box-shadow: 0 40px 110px rgba(6,6,12,0.66); }
+
+.contact-title{
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.contact-lead{ color: rgba(255,255,255,0.92); font-weight:600; margin-bottom:10px; }
+
+.social-buttons{ display:flex; gap:10px; align-items:center; margin-top:10px; }
+.social-btn{ display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border-radius:10px; background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); color:#fff; text-decoration:none; font-weight:700; transition: transform .14s ease, box-shadow .14s ease, background .14s ease; }
+.social-btn:hover{ transform: translateY(-4px); box-shadow: 0 18px 40px rgba(155,77,255,0.06); }
+.social-icon{ width:18px; height:18px; display:inline-block; filter: drop-shadow(0 6px 18px rgba(0,0,0,0.28)); }
+
+.contact-input, .contact-subject, .contact-textarea{
+  background: linear-gradient(180deg, rgba(0,0,0,0.14), rgba(255,255,255,0.015));
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 12px 14px;
+  border-radius: 10px;
+  transition: box-shadow .18s ease, transform .12s ease, border-color .12s ease;
+}
+.contact-input::placeholder, .contact-textarea::placeholder{ color: rgba(255,255,255,0.48); }
+.contact-input:focus, .contact-textarea:focus, .contact-subject:focus{
+  outline: none;
+  border-color: rgba(155,77,255,0.9);
+  box-shadow: 0 12px 40px rgba(155,77,255,0.10);
+  transform: translateY(-2px);
+}
+
+.contact-actions{ align-items:center; gap:12px; }
+.send-btn{
+  display:inline-flex; align-items:center; gap:10px; padding:12px 18px; border-radius:10px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)); color:#fff; font-weight:800; border: none; cursor:pointer;
+  box-shadow: 0 14px 40px rgba(155,77,255,0.14); transition: transform .16s ease, box-shadow .18s ease, filter .12s ease;
+}
+.send-btn:hover{ transform: translateY(-3px); box-shadow: 0 22px 58px rgba(155,77,255,0.18); }
+.send-btn:active{ transform: translateY(-1px); }
+
+.btn-copy, .btn-vcard{ padding:10px 14px; border-radius:10px; background: rgba(255,255,255,0.03); color:#fff; border:1px solid rgba(255,255,255,0.04); font-weight:700; }
+.btn-copy:hover, .btn-vcard:hover{ transform: translateY(-3px); box-shadow: 0 14px 36px rgba(0,0,0,0.3); }
+
+/* subtle entrance for contact cards when revealed */
+.contact-card.in-view{ transform: translateY(0); opacity:1; }
+
+@media (max-width: 880px){
+  .contact-grid{ gap:20px; }
+  .contact-card{ padding:18px; }
+  .contact-title{ font-size:1.15rem; }
+}
+
 /* semantic contact classes used in markup */
 .contact-title{ margin-top:0; }
 .contact-lead{ color: rgba(255,255,255,0.9); margin-bottom:6px; }
@@ -493,6 +578,18 @@ body{
 .contact-meta-row{ margin-top:8px; }
 .contact-note{ margin-top:18px; color: rgba(255,255,255,0.78); font-size:0.95rem; }
 .contact-phone{ margin:0 0 6px; }
+
+/* Contact stacking + icon styles (keeps form above transient overlays) */
+.contact-section{ position:relative; z-index:2400; }
+.contact-card{ position:relative; z-index:2405; }
+.contact-card input, .contact-card textarea, .contact-card button, .contact-card a{ pointer-events:auto; position:relative; z-index:2450; }
+
+/* Icon / social button styling used in contact area */
+.icon{ width:18px; height:18px; display:inline-block; vertical-align:middle; margin-right:8px; stroke:currentColor; fill:none; }
+.social-btn{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.04); color:#fff; text-decoration:none; font-weight:700; }
+.social-btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,0.36); }
+.btn-email{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; color:#fff; text-decoration:none; background: linear-gradient(90deg, rgba(155,77,255,0.98), rgba(255,92,168,0.9)); border: none; }
+
 
 .contact-form-row{ display:flex; gap:8px; flex-wrap:wrap; }
 .contact-input{ flex:1 1 220px; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#fff; }
