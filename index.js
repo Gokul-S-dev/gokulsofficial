@@ -1,5 +1,5 @@
 // simple typewriter for hero title
-const words = ['Web Developer', 'Full Stack Developer','AWS Cloud Engineer','DevOps Engineer'];
+const words = ['Web Developer', 'Full Stack Developer','Cloud Engineer'];
 let wordIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
